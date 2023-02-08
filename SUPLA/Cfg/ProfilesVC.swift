@@ -142,7 +142,16 @@ class ProfilesVC: BaseViewController {
                     self._activateProfile.on(.next(id))
                 case .addNewProfileItem:
                     print("tap on command add new")
+                if self._viewModel.profileItems.value.count >= 3 {
+                    let dialogMessage = UIAlertController(title: "Stop", message: "You cannot add more than 3 accounts.", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                         print("Ok button tapped")
+                      })
+                     dialogMessage.addAction(ok)
+                    self.present(dialogMessage, animated: true, completion: nil)
+                }else{
                     self._addNewProfile.on(.next(()))
+                }
             }
             self._profileList.deselectRow(at: indexPath, animated: true)
         }).disposed(by: _disposeBag)
